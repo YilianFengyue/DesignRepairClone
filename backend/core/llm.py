@@ -2,10 +2,11 @@ from typing import Awaitable, Callable, List
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletionChunk
 
-MODEL_GPT_4_VISION = "anthropic/claude-haiku-4.5"
-MODEL_GPT_4 = "anthropic/claude-haiku-4.5"
-MODEL_GPT_4 = "anthropic/claude-haiku-4.5"
-MODEL_GPT_4_TURBO = "anthropic/claude-haiku-4.5"
+MODEL_GPT_4_VISION = "anthropic/claude-sonnet-4.5"
+MODEL_GPT_4 = "anthropic/claude-sonnet-4.5"
+MODEL_GPT_4_TURBO = "anthropic/claude-sonnet-4.5"
+# anthropic/claude-sonnet-4.5
+# google/gemini-3-pro-preview
 
 async def stream_openai_response(
     messages: List[ChatCompletionMessageParam],
@@ -40,7 +41,6 @@ async def stream_openai_response(
         params["max_tokens"] = 4096
     
     # Add function calling
-    # === 修改开始：将 functions 转换为 tools ===
     if functions is not None:
         # 旧代码: params["functions"] = functions
         # 旧代码: params["function_call"] = {"name": functions[0]["name"]}
@@ -74,7 +74,6 @@ async def stream_openai_response(
             # 兼容性兜底：万一某些非主流模型还在发 function_call
             elif chunk.choices and chunk.choices[0].delta.function_call:
                 content = chunk.choices[0].delta.function_call.arguments or ""
-            # === 修改结束 ===
         else:
             content = chunk.choices[0].delta.content or ""
             

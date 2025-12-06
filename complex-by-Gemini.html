@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Bad Design (Remastered)</title>
+    <style>
+        /* * Material Design 3 风格重构 
+         * 核心原则：纸张隐喻、层级感、有意义的动画、适应性布局
+         */
+
+        /* 引入 Roboto 字体 (模拟引用，实际使用系统堆栈以防外链加载失败) */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            /* M3 Color Palette Token */
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-surface-variant: #F4F3F7;
+            --md-sys-color-outline: #79747E;
+            
+            /* Elevation Shadows */
+            --md-sys-elevation-1: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+            --md-sys-elevation-2: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 全局重置与排版 */
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 导航栏：Top App Bar 风格 */
+        .navbar {
+            background-color: var(--md-sys-color-surface); /* M3通常使用Surface色 */
+            color: var(--md-sys-color-on-surface);
+            padding: 0 16px;
+            height: 64px; /* 标准高度 */
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05); /* 轻微阴影 */
+            overflow: hidden; /* 保持原有属性 */
+        }
+
+        .navbar a {
+            float: none; /* 清除浮动，改用Flex */
+            display: inline-block;
+            color: var(--md-sys-color-on-surface);
+            text-align: center;
+            padding: 12px 16px;
+            text-decoration: none; /* 去除下划线 */
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 20px; /* 胶囊状点击态 */
+            transition: background-color 0.2s;
+            margin-right: 4px;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(103, 80, 164, 0.08); /* 悬停状态 */
+        }
+
+        /* Hero区域：强调排版与留白 */
+        .hero {
+            background-color: var(--md-sys-color-secondary-container); /* 柔和的次级容器色 */
+            padding: 48px 24px; /* 增加留白 */
+            text-align: center;
+            border-bottom: none; /* 去除生硬边框 */
+            margin-bottom: 24px;
+            border-radius: 0 0 24px 24px; /* 底部大圆角 */
+        }
+
+        .hero h1 {
+            font-size: 45px; /* Display Small 规范 */
+            line-height: 52px;
+            color: var(--md-sys-color-on-surface);
+            margin: 0 0 16px 0;
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #49454F;
+            max-width: 600px;
+            margin: 0 auto 32px auto;
+        }
+
+        /* 通用按钮样式 (Filled Button) */
+        button {
+            border: none;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .hero-btn {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            padding: 0 24px;
+            height: 40px; /* 最小触控高度 */
+            border-radius: 20px; /* 全圆角 */
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.1px;
+            box-shadow: var(--md-sys-elevation-1);
+            transition: box-shadow 0.2s, background-color 0.2s;
+            text-transform: uppercase;
+        }
+
+        .hero-btn:hover {
+            box-shadow: var(--md-sys-elevation-2);
+            background-color: #5f4a9a; /* 稍微变暗 */
+        }
+
+        /* 内容容器 */
+        .container {
+            padding: 0 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 48px;
+        }
+
+        .section-title {
+            color: var(--md-sys-color-on-surface);
+            text-decoration: none;
+            font-size: 24px; /* Headline Small */
+            font-weight: 400;
+            margin: 32px 0 24px 0;
+            display: block;
+        }
+
+        /* 卡片网格：Elevated Card 风格 */
+        .card-grid {
+            display: flex;
+            gap: 24px; /* 标准间距 */
+            flex-wrap: wrap; /* 响应式换行 */
+        }
+
+        .card {
+            border: none;
+            background-color: #FDFDFD; /* Surface 1 */
+            width: auto;
+            flex: 1;
+            min-width: 280px; /* 最小宽度 */
+            padding: 0;
+            border-radius: 12px; /* M3 卡片圆角 */
+            box-shadow: var(--md-sys-elevation-1);
+            overflow: hidden; /* 确保图片不溢出圆角 */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            box-shadow: var(--md-sys-elevation-2);
+            transform: translateY(-2px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px; /* 增加图片展示高度 */
+            object-fit: cover;
+            display: block; /* 消除底部空隙 */
+        }
+        
+        /* 针对原有 HTML 中的 style="background:gray..." 这种内联样式，
+           我们无法删除，但可以通过 !important 或 CSS 覆盖其中的图片表现。
+           由于 div 没 class，我们只能控制外层。 
+           这里我们假设那个灰色 div 是占位符，保持原样但调整比例。
+        */
+        .card > div:first-child {
+            height: 160px !important; /* 强制覆盖内联样式的高度 */
+            background-color: #E7E0EC !important; /* 替换丑陋的纯灰 */
+        }
+
+        .card-body {
+            padding: 16px; /* 内部标准留白 */
+        }
+
+        .card-title {
+            font-weight: 500;
+            font-size: 20px; /* Title Large */
+            margin: 0 0 8px 0;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .card-text {
+            font-size: 14px; /* Body Medium */
+            color: #49454F;
+            margin-bottom: 24px;
+            line-height: 20px;
+        }
+
+        /* 卡片按钮：Text Button 风格 */
+        .card-action {
+            display: inline-block;
+            background: transparent;
+            text-align: left;
+            margin-top: 0;
+            font-size: 14px;
+            padding: 0 12px;
+            border: none;
+            height: 40px;
+            line-height: 40px;
+            color: var(--md-sys-color-primary);
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.2s;
+            width: auto; /* 取消 block */
+        }
+
+        .card-action:hover {
+            background-color: rgba(103, 80, 164, 0.08);
+        }
+
+        /* 表单区域 */
+        .form-section {
+            margin-top: 48px;
+            border: 1px solid var(--md-sys-color-outline); /* 更柔和的边框 */
+            border-radius: 8px;
+            padding: 24px;
+            background-color: #FFFFFF;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #49454F;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        /* 模拟 Material Text Field (Outlined) */
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
+            height: 56px; /* 标准触摸目标高度 */
+            padding: 0 16px;
+            box-sizing: border-box; /* 修复宽度溢出 */
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: transparent;
+        }
+
+        textarea {
+            height: auto;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            resize: vertical;
+        }
+
+        /* 聚焦状态 */
+        input:focus, textarea:focus {
+            border-color: var(--md-sys-color-primary);
+            outline: none;
+            box-shadow: 0 0 0 1px var(--md-sys-color-primary); /* 加粗边框效果 */
+        }
+
+        /* 提交按钮：Filled Button */
+        .submit-btn {
+            width: 100%;
+            height: 48px;
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-radius: 24px; /* 胶囊形状 */
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            box-shadow: var(--md-sys-elevation-1);
+            transition: box-shadow 0.2s, background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #5f4a9a;
+            box-shadow: var(--md-sys-elevation-2);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            .navbar {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 8px;
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .card-grid {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Services</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="hero">
+        <h1>Welcome to Our Awesome Website</h1>
+        <p>This is a subtitle that is very hard to read because of low contrast.</p>
+        <button class="hero-btn">CLICK ME NOW</button>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Our Best Products</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div style="background:gray; height:100px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product A</p>
+                    <p class="card-text">This is a description text that is too small.</p>
+                    <button class="card-action">Buy</button>
+                </div>
+            </div>
+            <div class="card">
+                <div style="background:gray; height:100px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product B</p>
+                    <p class="card-text">Another description.</p>
+                    <button class="card-action">Buy</button>
+                </div>
+            </div>
+            <div class="card">
+                <div style="background:gray; height:100px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product C</p>
+                    <p class="card-text">More text here.</p>
+                    <button class="card-action">Buy</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email">
+            </div>
+            <div class="form-group">
+                <label>Message:</label>
+                <textarea rows="3"></textarea>
+            </div>
+            <button class="submit-btn">SEND MESSAGE</button>
+        </div>
+    </div>
+
+</body>
+</html>

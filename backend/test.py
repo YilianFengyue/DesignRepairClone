@@ -93,8 +93,8 @@ def load_system_level_guidelines(file_path):
 
 
 if __name__ == "__main__":
-    file_dir = r"..\examples" # Your frontend code file folder
-    file_name = "petstore.tsx" # Your frontend code file
+    file_dir = r"../" # Your frontend code file folder
+    file_name = "complex.html" # Your frontend code file
 
     # page to be tested
     pageurl = "http://localhost:3000" # Your rendered page url
