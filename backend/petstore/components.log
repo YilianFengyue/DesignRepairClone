@@ -3,3 +3,16 @@ complex components{"components": ["top app bar","search","cards","navigation bar
 library components{"components": ["text fields","icon buttons","floating action button","badges","navigation bar","top app bar","search","cards","bottom app bar"]}
 simpler components{"components": ["text fields","icon buttons","floating action button","badges","navigation bar","top app bar","search","cards","bottom app bar"]}
 
+simpler components{"components":["text fields","buttons","icon buttons","badges","floating action button"]}
+simpler components{"components":["text fields","buttons","icon buttons","badges","floating action button"]}
+simpler components{"components":["text fields","buttons","icon buttons","badges","floating action button"]}
+simpler components{"components": ["text fields","icon buttons","buttons","floating action button","badges"]}
+complex components{"components": ["top app bar","navigation bar","search","cards","carousel"]}
+library components{"components": ["text fields","icon buttons","buttons","floating action button","badges","top app bar","navigation bar","search","cards","carousel"]}
+simpler components{"components": ["text fields","icon buttons","buttons","floating action button","badges","top app bar","navigation bar","search","cards","carousel"]}
+
+simpler components{"components": ["input","buttons","icon buttons","floating action button","badges"]}
+complex components{"components": ["top app bar","navigation bar","search","cards","carousel","chips"]}
+library components{"components": ["text fields","buttons","icon buttons","floating action button","badges","top app bar","navigation bar","search","cards","carousel","chips"]}
+simpler components{"components": ["text fields","buttons","icon buttons","floating action button","badges","top app bar","navigation bar","search","cards","carousel","chips"]}
+

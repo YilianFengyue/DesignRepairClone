@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Bad Design</title>
+    <style>
+        /* 全局样式：字体难看，间距极小 */
+        body {
+            font-family: "Times New Roman", Times, serif; /* 违反：应使用无衬线字体 */
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        /* 导航栏：颜色刺眼，高度不够，布局拥挤 */
+        .navbar {
+            background-color: #0000ff; /* 纯蓝，刺眼 */
+            color: yellow; /* 纯黄，对比度虽高但很难看 */
+            padding: 5px; /* 违反：触控区域太小 */
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            color: yellow;
+            text-align: center;
+            padding: 10px 10px; /* 左右间距太小 */
+            text-decoration: underline; /* 违反：导航链接通常无下划线 */
+            font-size: 14px;
+        }
+
+        /* Hero区域：文字对比度低，按钮样式原始 */
+        .hero {
+            background-color: #ddd;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid black; /* 违反：生硬的边框 */
+        }
+        .hero h1 {
+            font-size: 24px; /* 违反：作为大标题太小 */
+            color: #aaa; /* 违反：在浅灰背景上用浅灰文字，对比度极低 */
+            margin: 5px;
+        }
+        .hero-btn {
+            background-color: green;
+            color: black; /* 违反：绿底黑字，难读 */
+            border: 2px solid red; /* 违反：奇怪的边框配色 */
+            padding: 2px 5px; /* 违反：点击区域极小 (<48dp) */
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* 内容区：卡片布局 */
+        .container {
+            padding: 10px;
+        }
+        .section-title {
+            color: red;
+            text-decoration: underline;
+            font-size: 18px;
+        }
+
+        /* 卡片网格：缺乏留白，边框生硬，无阴影 */
+        .card-grid {
+            display: flex;
+            gap: 5px; /* 违反：间距太窄 */
+        }
+        .card {
+            border: 1px solid black;
+            background-color: white;
+            width: 30%;
+            padding: 0; /* 违反：内容紧贴边框 */
+        }
+        .card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 2px; /* 违反：内边距极小 */
+        }
+        .card-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0;
+        }
+        .card-text {
+            font-size: 10px; /* 违反：正文太小，难读 */
+            color: #888;
+        }
+        .card-action {
+            display: block;
+            background: #ccc;
+            text-align: center;
+            margin-top: 5px;
+            font-size: 10px;
+            padding: 2px;
+            border: 1px solid black;
+        }
+
+        /* 表单区域：输入框高度不足，标签不对齐 */
+        .form-section {
+            margin-top: 30px;
+            border: 1px dashed black;
+            padding: 10px;
+        }
+        .form-group {
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            border: 2px inset #eee;
+            height: 20px; /* 违反：太矮，不适合触控 */
+        }
+        .submit-btn {
+            width: 100%;
+            height: 30px;
+            background-color: blue;
+            color: white;
+            border-radius: 0; /* 违反：直角 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Services</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="hero">
+        <h1>Welcome to Our Awesome Website</h1>
+        <p>This is a subtitle that is very hard to read because of low contrast.</p>
+        <button class="hero-btn">CLICK ME NOW</button>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Our Best Products</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div style="background:gray; height:100px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product A</p>
+                    <p class="card-text">This is a description text that is too small.</p>
+                    <button class="card-action">Buy</button>
+                </div>
+            </div>
+            <div class="card">
+                <div style="background:gray; height:100px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product B</p>
+                    <p class="card-text">Another description.</p>
+                    <button class="card-action">Buy</button>
+                </div>
+            </div>
+            <div class="card">
+                <div style="background:gray; height:100px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product C</p>
+                    <p class="card-text">More text here.</p>
+                    <button class="card-action">Buy</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email">
+            </div>
+            <div class="form-group">
+                <label>Message:</label>
+                <textarea rows="3"></textarea>
+            </div>
+            <button class="submit-btn">SEND MESSAGE</button>
+        </div>
+    </div>
+
+</body>
+</html>

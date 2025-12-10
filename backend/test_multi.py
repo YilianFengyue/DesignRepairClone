@@ -14,8 +14,11 @@ class FileContext(BaseModel):
     file_name: str
     file_dir: str
     file_content: str
-    root_directory: str = None
+    # 修改 1: 明确允许 None 类型
+    root_directory: Optional[str] = None
     example_content: Optional[str] = None
+    # 修改 2: 补上缺失的字段，防止报 "extra fields not permitted"
+    load_files: Optional[str] = None
 
 
 
@@ -129,14 +132,24 @@ def load_system_level_guidelines(file_path):
 
 
 if __name__ == "__main__":
-    file_dir = r"..\examples" # Your frontend code file folder
-    file_name_list = ["example1.tsx"] # Your frontend code file
-    testname = file_name_list[0].split(".")[0]
+    # 注意结尾加上 \src\components
+    file_dir = r"C:\Users\15139\Desktop\calculator\src\component"
+    
+    # 2. 指定要修复的核心组件文件
+    # 我们把计算器的显示屏、按钮面板、按钮本体、以及主 App 容器都修一遍
+    file_name_list = [
+        "Button.js", 
+        "ButtonPanel.js", 
+        "Display.js", 
+        "App.js" 
+    ]
+    
+    testname = "calculator_repair"
 
     # page to be tested
-    pageurl = "http://localhost:3000" # Your rendered page url
+    pageurl = "http://localhost:3000"
 
-    comp_guidelines_path = r"..\library\components_knowledge_base.json" # component guideline file
+    comp_guidelines_path = r"..\library\component_knowledge_base.json" # component guideline file
     system_level_guidelines_path = r"..\library\system_design_knowledge_base.csv" # system level guideline file
 
     ctx = process_file_multi(file_dir, file_name_list, testname)

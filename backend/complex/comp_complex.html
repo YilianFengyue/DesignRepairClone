@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Clean Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            color: #495057;
+            text-align: center;
+            padding: 20px 28px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .navbar a:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #f8f9fa;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-btn {
+            background-color: #ffffff;
+            color: #667eea;
+            border: none;
+            padding: 16px 40px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .hero-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .section-title {
+            color: #212529;
+            text-decoration: none;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .card-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            border: none;
+            background-color: #ffffff;
+            width: calc(33.333% - 20px);
+            min-width: 280px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 24px;
+        }
+        .card-title {
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #212529;
+        }
+        .card-text {
+            font-size: 15px;
+            color: #6c757d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .card-action {
+            display: block;
+            background: #667eea;
+            color: #ffffff;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .card-action:hover {
+            background: #5568d3;
+        }
+
+        .form-section {
+            margin-top: 80px;
+            background-color: #ffffff;
+            border: none;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+            font-size: 15px;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            border: 2px solid #e9ecef;
+            padding: 14px 16px;
+            font-size: 15px;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Services</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="hero">
+        <h1>Welcome to Our Awesome Website</h1>
+        <p>Discover amazing products and services designed to make your life better</p>
+        <button class="hero-btn">Get Started</button>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Our Best Products</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height:200px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product A</p>
+                    <p class="card-text">Discover our premium product with exceptional quality and outstanding features.</p>
+                    <button class="card-action">Buy Now</button>
+                </div>
+            </div>
+            <div class="card">
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height:200px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product B</p>
+                    <p class="card-text">Experience innovation with our carefully crafted solution for your needs.</p>
+                    <button class="card-action">Buy Now</button>
+                </div>
+            </div>
+            <div class="card">
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height:200px; width:100%;"></div>
+                <div class="card-body">
+                    <p class="card-title">Product C</p>
+                    <p class="card-text">Transform your experience with our cutting-edge technology and design.</p>
+                    <button class="card-action">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label>Message:</label>
+                <textarea rows="5" placeholder="Write your message here"></textarea>
+            </div>
+            <button class="submit-btn">Send Message</button>
+        </div>
+    </div>
+
+</body>
+</html>
